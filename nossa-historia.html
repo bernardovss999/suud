@@ -75,6 +75,8 @@
   <symbol id="s-sum" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 3v4h10V5H7Zm0 7v2h2v-2H7Zm4 0v2h2v-2h-2Zm4 0v6h2v-6h-2Zm-8 4v2h2v-2H7Zm4 0v2h2v-2h-2Z"/></symbol>
   <symbol id="s-check" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.7 14.9L2 22l5.2-1.3A10 10 0 1 0 12 2Zm-1.2 13.8-3.6-3.6 1.4-1.4 2.2 2.2 5-5 1.4 1.4-6.4 6.4Z"/></symbol>
   <symbol id="s-question" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 16h-2v-2h2v2Zm1.6-6.6-.9.9c-.6.6-.9 1.1-.9 2.2h-1.9v-.5c0-1.1.4-2 1.1-2.7l1.2-1.2a1.7 1.7 0 0 0 .5-1.3 1.8 1.8 0 0 0-3.6 0H8.3a3.7 3.7 0 0 1 7.4 0c0 1-.4 1.9-1.1 2.6Z"/></symbol>
+  <symbol id="s-insta" viewBox="0 0 24 24"><path fill="currentColor" d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3Zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0ZM12 4.6c2.4 0 2.7 0 3.6.1 2.4.1 3.6 1.3 3.7 3.7.1 1 .1 1.2.1 3.6s0 2.7-.1 3.6c-.1 2.4-1.3 3.6-3.7 3.7-1 .1-1.2.1-3.6.1s-2.7 0-3.6-.1c-2.4-.1-3.6-1.3-3.7-3.7-.1-1-.1-1.2-.1-3.6s0-2.7.1-3.6C4.8 6 6 4.8 8.4 4.7c1-.1 1.2-.1 3.6-.1ZM12 3c-2.4 0-2.8 0-3.7.1C5 3.2 3.2 5 3.1 8.3 3 9.2 3 9.6 3 12s0 2.8.1 3.7c.1 3.3 1.9 5.1 5.2 5.2.9.1 1.3.1 3.7.1s2.8 0 3.7-.1c3.3-.1 5.1-1.9 5.2-5.2.1-.9.1-1.3.1-3.7s0-2.8-.1-3.7C20.8 5 19 3.2 15.7 3.1 14.8 3 14.4 3 12 3Z"/></symbol>
+  <symbol id="s-whats" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2A9.8 9.8 0 0 0 3.6 17l-1.4 4.9 5-1.3A9.8 9.8 0 1 0 12 2.2Zm5.7 13.9c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.3Z"/></symbol>
   <symbol id="s-chevron-l" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></symbol>
   <symbol id="s-chevron-r" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></symbol>
 </defs></svg>
@@ -93,6 +95,15 @@
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu"><span class="sr-only">Abrir menu</span><span class="menu-toggle__lines" aria-hidden="true"></span></button>
     <nav class="nav nav--left" aria-label="Principal">
       <a href="index.html">Início</a>
+            <div class="nav-more">
+        <button class="nav-more__btn" type="button" aria-expanded="false" aria-controls="nav-more-list">Opções<svg aria-hidden="true"><use href="#s-chevron-r"/></svg></button>
+        <div class="nav-more__panel" id="nav-more-list">
+          <a href="cardapio.html">Cardápio completo</a><a href="eventos.html">Eventos e cultura</a><a href="delivery.html">Delivery pelo WhatsApp</a>
+          <a href="index.html#mezze">Mezze para dividir</a><a href="nossa-historia.html">Nossa história</a><a href="eventos.html">Eventos e cultura</a>
+          <a href="index.html#perguntas">Perguntas frequentes</a><a href="index.html#visite">Como chegar</a>
+          <button type="button" data-ahlan-open data-ahlan-intent="reserva">Reservar mesa</button>
+        </div>
+      </div>
       <a href="cardapio.html">Cardápio</a>
       <a href="delivery.html">Delivery</a>
       <a href="index.html#mezze">Mezze</a>
@@ -110,23 +121,13 @@
       <svg class="brand-word" aria-hidden="true"><use href="#wordmark"/></svg>
     </a>
     <div class="nav nav--right">
-      <a href="eventos.html">Eventos</a>
-      <a href="index.html#visite">Visite</a>
-      <div class="nav-more">
-        <button class="nav-more__btn" type="button" aria-expanded="false" aria-controls="nav-more-list">Opções<svg aria-hidden="true"><use href="#s-chevron-r"/></svg></button>
-        <div class="nav-more__panel" id="nav-more-list">
-          <a href="cardapio.html">Cardápio completo</a><a href="delivery.html">Delivery pelo WhatsApp</a>
-          <a href="index.html#mezze">Mezze para dividir</a><a href="nossa-historia.html">Nossa história</a><a href="eventos.html">Eventos e cultura</a>
-          <a href="index.html#perguntas">Perguntas frequentes</a><a href="index.html#visite">Como chegar</a>
-          <button type="button" data-ahlan-open data-ahlan-intent="reserva">Reservar mesa</button>
-        </div>
-      </div>
+      <a class="social-btn" href="https://www.instagram.com/suud.restaurante/" target="_blank" rel="noopener" aria-label="Instagram do Suud"><svg aria-hidden="true"><use href="#s-insta"/></svg></a>
+      <a class="social-btn" href="https://wa.me/5521967717717" target="_blank" rel="noopener" aria-label="WhatsApp do Suud"><svg aria-hidden="true"><use href="#s-whats"/></svg></a>
       <button class="order-chip" type="button" data-ahlan-open aria-haspopup="dialog" aria-controls="ahlan">
         <span class="order-chip__avatar" aria-hidden="true"><svg><use href="#cedar"/></svg></span>
         <span class="order-chip__label">Fazer pedido</span>
         <span class="order-chip__count" data-cart-count hidden>0</span>
       </button>
-      <a class="call-btn" href="tel:+5521967717717" aria-label="Ligar para o Suud: (21) 96771-7717"><svg aria-hidden="true"><use href="#i-phone"/></svg></a>
     </div>
   </div>
 </header>
