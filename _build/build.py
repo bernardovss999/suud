@@ -7,7 +7,7 @@ B = os.path.join(ROOT, '_build')
 SPRITE = open(os.path.join(B, 'sprite.html'), encoding='utf-8').read()
 PANELS = open(os.path.join(B, 'panels.html'), encoding='utf-8').read()
 DOMAIN = 'https://www.SEUDOMINIO.com.br/'  # TROCAR pelo domínio definitivo
-V = '40'
+V = '41'
 
 EXTRA_ICONS = '''
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>

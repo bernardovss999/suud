@@ -947,7 +947,7 @@ main { padding-top: var(--header-h); }
 .page-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 65%; transform: scale(1.06); transition: transform 2.4s var(--ease); }
 .is-loaded .page-hero__media img { transform: none; }
 .page-hero__media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(43, 20, 14, .35), rgba(43, 20, 14, .82)); }
-.page-hero__inner { position: relative; padding-block: clamp(60px, 7vw, 100px); }
+.page-hero__inner { position: relative; padding-top: calc(var(--header-h) + clamp(32px, 5vw, 72px)); padding-bottom: clamp(60px, 7vw, 100px); }
 .page-hero h1 { font-size: clamp(2rem, 1.2rem + 3vw, 3.8rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.06; max-width: 18ch; }
 .page-hero__lede { margin-top: 18px; max-width: 56ch; font-size: clamp(1rem, .95rem + .35vw, 1.2rem); color: rgba(245, 240, 230, .88); }
 .js .page-hero__inner > * { opacity: 0; transform: translateY(20px); }
@@ -1196,4 +1196,49 @@ main { padding-top: 0; }
   .hero__chat { position: absolute; left: 14px; right: 14px; top: auto; bottom: 22px; width: auto; margin: 0; height: 360px; }
   .ahlan__panel.is-embedded { height: 100%; animation: chatRise 1.2s var(--ease-spring) 2.4s both; }
   @keyframes chatRise { 0% { opacity: 0; transform: translateY(55%) scale(.84); } 55% { opacity: 1; } 100% { opacity: 1; transform: none; } }
+}
+
+/* V7 — alinhamento da navegação e dos títulos das categorias; mobile mais leve */
+.nav a, .nav-more__btn { white-space: nowrap; }
+@media (min-width: 1081px) and (max-width: 1360px) {
+  .navbar { gap: 16px; }
+  .nav { gap: clamp(14px, 1.5vw, 24px); }
+  .nav a, .nav-more__btn { font-size: .86rem; }
+  .nav--right { gap: 12px; }
+}
+@media (min-width: 1081px) and (max-width: 1200px) { .nav--left { gap: 12px; } }
+
+/* Título e descrição da categoria centralizados na faixa de foto, sem posições fixas */
+.menu-cat.is-active:has(.menu-cat__banner) { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 90px 90px; }
+.menu-cat:has(.menu-cat__banner) > .menu-cat__banner { grid-area: 1 / 1 / 3 / 2; height: auto; margin: 0; }
+.menu-cat:has(.menu-cat__banner) > .menu-cat__title,
+.menu-cat:has(.menu-cat__banner) > .menu-cat__note { position: relative; inset: auto; grid-column: 1; padding-inline: 30px; text-align: left; }
+.menu-cat:has(.menu-cat__banner) > .menu-cat__title { grid-row: 1; align-self: end; line-height: 1.15; }
+.menu-cat:has(.menu-cat__banner) > .menu-cat__note { grid-row: 2; align-self: start; margin: 6px 0 0; }
+.menu-cat:has(.menu-cat__banner) > .menu-cat__banner ~ :not(.menu-cat__title):not(.menu-cat__note) { grid-column: 1; }
+.menu-cat:has(.menu-cat__banner) > .dishes { margin-top: 26px; }
+
+.is-locked, .is-locked body { overflow: hidden; }
+
+@media (max-width: 860px) {
+  .menu-cat.is-active:has(.menu-cat__banner) { grid-template-rows: 65px 65px; }
+  .menu-cat:has(.menu-cat__banner) > .menu-cat__title,
+  .menu-cat:has(.menu-cat__banner) > .menu-cat__note { padding-inline: 20px; }
+  .menu-cat:has(.menu-cat__banner) > .menu-cat__title { font-size: 1.45rem; }
+  .menu-cat:has(.menu-cat__banner) > .menu-cat__note { margin-top: 4px; font-size: .82rem; line-height: 1.45; }
+  .menu-cat:has(.menu-cat__banner) > .dishes { margin-top: 18px; }
+
+  /* Capa: logo + Ahlan inteiros na primeira tela, acima do dock */
+  .hero__media { height: max(100svh, 560px); max-height: none; }
+  .hero__media img { inset: 0; height: 100%; object-fit: cover; object-position: center 70%; }
+  .hero__logo { width: min(28vw, 15svh); }
+  .hero__chat { top: calc(var(--header-h) + 4vw + min(28vw, 15svh) * 1.04 + 8vw + 18px); bottom: calc(86px + env(safe-area-inset-bottom)); height: auto; }
+  .ahlan__panel.is-embedded { animation-delay: .5s; background: rgba(245, 240, 230, .96); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .ahlan__panel.is-embedded .ahlan__head { padding-block: 10px 8px; }
+  .ahlan__panel.is-embedded .ahlan__log { padding: 12px 12px 8px; }
+
+  /* Menos camadas com desfoque: rolagem mais leve */
+  .dock { background: rgba(43, 28, 24, .97); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .menu-tabs { background: rgb(251, 248, 242); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .mz-arrow, .rail-arrow, .trio-arrow { -webkit-backdrop-filter: none; backdrop-filter: none; }
 }

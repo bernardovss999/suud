@@ -210,13 +210,20 @@
 
   /* ---------- Mensagens ---------- */
   let chain = Promise.resolve();
-  const scrollLog = () => requestAnimationFrame(() => log.scrollTo({ top: log.scrollHeight, behavior: reduce ? 'auto' : 'smooth' }));
+  /* Rola até o fim, mas nunca além do início da resposta atual: a primeira mensagem fica sempre legível */
+  let turnStart = null;
+  const scrollLog = () => requestAnimationFrame(() => {
+    let top = log.scrollHeight - log.clientHeight;
+    if (turnStart && log.contains(turnStart)) top = Math.min(top, turnStart.getBoundingClientRect().top - log.getBoundingClientRect().top + log.scrollTop - 10);
+    log.scrollTo({ top: Math.max(0, top), behavior: reduce ? 'auto' : 'smooth' });
+  });
+  const append = el => { if (!turnStart || !log.contains(turnStart)) turnStart = el; log.appendChild(el); scrollLog(); };
 
   function node(cls, html) {
     const m = document.createElement('div');
     m.className = 'm ' + cls;
     m.innerHTML = `<div class="m__b">${html}</div>`;
-    log.appendChild(m); scrollLog();
+    append(m);
     return m;
   }
   function say(html, delay) {
@@ -226,7 +233,7 @@
       const t = document.createElement('div');
       t.className = 'typing'; t.setAttribute('role', 'status');
       t.innerHTML = '<span class="sr-only">Ahlan está digitando</span><i></i><i></i><i></i>';
-      log.appendChild(t); scrollLog();
+      append(t);
       const len = html.replace(/<[^>]+>/g, '').length;
       await wait(delay ?? Math.min(1100, 380 + len * 7));
       t.remove();
@@ -235,7 +242,7 @@
     });
     return chain;
   }
-  const userSay = text => node('m--user', esc(text));
+  const userSay = text => { turnStart = null; return node('m--user', esc(text)); };
   const note = html => node('m--note', html);
   const after = fn => { const f = state.flow; chain = chain.then(() => f === state.flow && fn()); return chain; };
 
@@ -255,7 +262,7 @@
       });
       wrap.appendChild(b);
     });
-    log.appendChild(wrap); scrollLog();
+    append(wrap);
     return wrap;
   }
 
@@ -275,7 +282,7 @@
       });
       r.appendChild(c);
     });
-    log.appendChild(r); scrollLog();
+    append(r);
     return r;
   }
 
@@ -434,7 +441,7 @@
       wrap.appendChild(t);
     };
     draw();
-    log.appendChild(wrap); scrollLog();
+    append(wrap);
   }
   function review() {
     if (!state.cart.size) {
@@ -516,7 +523,7 @@
     c.innerHTML = `<h4>${esc(title)}</h4><pre>${esc(text)}</pre>
       <a href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-whats"/></svg>Enviar pelo WhatsApp</a>
       <small>Você revisa a mensagem no WhatsApp antes de enviar. Valores do site são de referência.</small>`;
-    log.appendChild(c); scrollLog();
+    append(c);
     after(() => chips([{ label: 'Voltar ao início', action: () => runFlow(() => { say('Em que mais posso ajudar?', 400); after(mainChips); }) }]));
   }
 

@@ -8,8 +8,10 @@
   const navH = () => parseInt(getComputedStyle(root).getPropertyValue('--nav-h')) || 72;
 
   /* ---------- Scroll suave (Lenis) ---------- */
+  /* No toque (celular/tablet) o scroll nativo é mais fluido: Lenis só no desktop */
+  const touch = matchMedia('(hover: none), (pointer: coarse)').matches;
   let lenis = null;
-  if (!reduce && window.Lenis) {
+  if (!reduce && !touch && window.Lenis) {
     lenis = new window.Lenis({ duration: 1.15, easing: t => 1 - Math.pow(1 - t, 4), smoothWheel: true });
     const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
     requestAnimationFrame(raf);
@@ -23,8 +25,8 @@
       else window.scrollTo({ top: el.getBoundingClientRect().top + scrollY + off, behavior: reduce ? 'auto' : 'smooth' });
     },
     top() { lenis ? lenis.scrollTo(0, { duration: 1.4 }) : scrollTo({ top: 0, behavior: 'smooth' }); },
-    stop() { lenis && lenis.stop(); },
-    start() { lenis && lenis.start(); }
+    stop() { lenis ? lenis.stop() : root.classList.add('is-locked'); },
+    start() { lenis ? lenis.start() : root.classList.remove('is-locked'); }
   };
 
   /* ---------- Entrada ---------- */
@@ -45,7 +47,7 @@
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         const el = e.target;
-        if (e.isIntersecting) { el.classList.add('is-in'); el.classList.remove('is-past'); }
+        if (e.isIntersecting) { el.classList.add('is-in'); el.classList.remove('is-past'); if (touch) io.unobserve(el); }
         else if (e.boundingClientRect.top < 0) { el.classList.remove('is-in'); el.classList.add('is-past'); }
         else { el.classList.remove('is-in', 'is-past'); }
       });
@@ -57,10 +59,17 @@
   const hero = $('.hero');
   const intro = $('.intro');
   const dockProgress = $('.dock__progress');
-  let lastY = scrollY, ticking = false;
+  let lastY = scrollY, ticking = false, heroEnd = 0, maxY = 0;
+  const measure = () => {
+    heroEnd = (hero ? hero.offsetHeight : 400) + (intro ? intro.offsetHeight : 0) - 80;
+    maxY = document.documentElement.scrollHeight - innerHeight;
+  };
+  measure();
+  window.addEventListener('resize', measure, { passive: true });
+  window.addEventListener('load', measure);
+  if ('ResizeObserver' in window) new ResizeObserver(measure).observe(document.body);
   const onScroll = () => {
     const y = scrollY;
-    const heroEnd = (hero ? hero.offsetHeight : 400) + (intro ? intro.offsetHeight : 0) - 80;
     root.classList.toggle('is-scrolled', y > 12);
     root.classList.toggle('is-floating', y > heroEnd);
     if (!root.classList.contains('menu-open') && !root.classList.contains('ahlan-open')) {
@@ -68,8 +77,7 @@
       else if (y < lastY - 6 || y < heroEnd) root.classList.remove('is-hidden-header');
     }
     if (dockProgress) {
-      const max = document.documentElement.scrollHeight - innerHeight;
-      dockProgress.style.setProperty('--p', max > 0 ? (y / max).toFixed(4) : 0);
+      dockProgress.style.setProperty('--p', maxY > 0 ? Math.min(1, y / maxY).toFixed(4) : 0);
     }
     lastY = y;
     parallax();
@@ -77,7 +85,7 @@
   };
   window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
 
-  const pEls = reduce ? [] : $$('[data-parallax]');
+  const pEls = reduce || touch ? [] : $$('[data-parallax]');
   function parallax() {
     const vh = innerHeight;
     pEls.forEach(el => {
