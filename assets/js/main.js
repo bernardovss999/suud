@@ -44,14 +44,29 @@
   });
   const fadeEls = $$('.reveal-fade');
   if ('IntersectionObserver' in window && !reduce) {
+    /* Pulo de rolagem (meia tela ou mais de uma vez: âncora sem animação, captura de tela inteira,
+       restauração de posição): o que já está na tela aparece na hora, sem esperar a animação de entrada */
+    let prevY = scrollY, jumpAt = -1e9;
+    window.addEventListener('scroll', () => {
+      if (Math.abs(scrollY - prevY) > innerHeight * .5) jumpAt = performance.now();
+      prevY = scrollY;
+    }, { passive: true });
+    const instant = el => {
+      el.classList.add('is-instant');
+      requestAnimationFrame(() => requestAnimationFrame(() => el.classList.remove('is-instant')));
+    };
     const io = new IntersectionObserver(entries => {
+      const jumped = performance.now() - jumpAt < 250;
       entries.forEach(e => {
         const el = e.target;
-        if (e.isIntersecting) { el.classList.add('is-in'); el.classList.remove('is-past'); if (touch) io.unobserve(el); }
+        if (e.isIntersecting) {
+          if (jumped && !el.classList.contains('is-in')) instant(el);
+          el.classList.add('is-in'); el.classList.remove('is-past'); if (touch) io.unobserve(el);
+        }
         else if (e.boundingClientRect.top < 0) { el.classList.remove('is-in'); el.classList.add('is-past'); }
         else { el.classList.remove('is-in', 'is-past'); }
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: .08 });
+    }, { threshold: 0 });
     revealEls.concat(fadeEls).forEach(el => io.observe(el));
   } else revealEls.concat(fadeEls).forEach(el => el.classList.add('is-in'));
 
