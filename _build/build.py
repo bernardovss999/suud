@@ -7,7 +7,7 @@ B = os.path.join(ROOT, '_build')
 SPRITE = open(os.path.join(B, 'sprite.html'), encoding='utf-8').read()
 PANELS = open(os.path.join(B, 'panels.html'), encoding='utf-8').read()
 DOMAIN = 'https://www.SEUDOMINIO.com.br/'  # TROCAR pelo domínio definitivo
-V = '41'
+V = '42'
 
 EXTRA_ICONS = '''
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
@@ -101,6 +101,7 @@ def header(active):
     mob = '\n      '.join(f'<li><a href="{h}">{t}</a></li>' for h, t in [n for n in NAV if n[0] != '#opcoes'] + NAV_R + [('index.html#perguntas', 'Perguntas frequentes')])
     return f'''
 <header class="site-header">
+  <p class="sett-faixa">Prévia feita pela <a href="https://www.sett.company/" target="_blank" rel="noopener"><img src="assets/img/sett-branco.png" alt="Sett" width="254" height="96"></a> para <b>Suud</b> · não oficial</p>
   <div class="topbar">
     <p class="topbar__text">
       <span class="topbar__live" aria-hidden="true"></span>
