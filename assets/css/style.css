@@ -301,6 +301,7 @@ main { padding-top: var(--header-h); }
 .js .reveal.is-past { opacity: 0; transform: translateY(-22px); }
 .js .reveal-fade { opacity: 0; transition: opacity 1s var(--ease-soft); }
 .js .reveal-fade.is-in { opacity: 1; }
+.js .is-instant, .js .is-instant img, .js .is-instant iframe { transition: none !important; }
 .js .reveal--img, .js .reveal--img.is-past { opacity: 1; transform: none; clip-path: inset(14% 0 0 0); transition: clip-path .8s var(--ease-soft); }
 .js .reveal--img img, .js .reveal--img iframe { transform: scale(1.12); }
 .js .reveal--img.is-in { clip-path: inset(0 0 0 0); transition: clip-path 1.4s var(--ease); }
